@@ -1,7 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "defaultCollection": "@angular-eslint/schematics"
   },
   "version": 1,
   "newProjectRoot": "projects",
@@ -34,8 +35,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "node_modules/@picocss/pico/scss/pico.classless.scss",
+              "src/styles/site.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": []
+            },
             "scripts": []
           },
           "configurations": {
@@ -66,6 +71,20 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.headless.ts"
+                }
+              ]
+            },
+            "local-dev": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
               "namedChunks": true
             }
           },
@@ -79,6 +98,9 @@
             },
             "development": {
               "browserTarget": "eshop-admin-ngweb:build:development"
+            },
+            "local-dev": {
+              "browserTarget": "eshop-admin-ngweb:build:local-dev"
             }
           },
           "defaultConfiguration": "development"
@@ -93,17 +115,32 @@
           "builder": "@angular-builders/jest:run",
           "options": {
             "no-cache": true,
-            "polyfills": ["src/polyfills.ts"],
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": ["css","scss"],
+            "inlineStyleLanguage": [
+              "css",
+              "scss"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "node_modules/@picocss/pico/scss/pico.classless.scss",
+              "src/styles/site.scss"
             ],
             "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }

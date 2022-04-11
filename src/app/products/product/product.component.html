@@ -1,0 +1,21 @@
+<section class="Product" *appLoadingSection="!product">
+  <app-entity-create *ngIf="isCreateMode"
+    [(entity)]=product 
+    [schema]=productSchema 
+    (create)="onCreate()">
+  </app-entity-create>
+  <app-entity-read *ngIf="isReadMode" 
+    [schema]=productSchema 
+    [entity]=product>
+  </app-entity-read>
+  <app-entity-update *ngIf="isUpdateMode"
+    [(entity)]=product
+    [schema]=productSchema
+    (update)="onUpdate()">
+  </app-entity-update>
+  <app-entity-delete *ngIf="isDeleteMode"
+    [entity]=product 
+    [schema]=productSchema 
+    (delete)="onDelete()">
+  </app-entity-delete>
+</section>

@@ -3,6 +3,13 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "~/*": ["src/*"],
+      "~assets/*": ["src/assets/*"],
+      "~config": ["src/config/index.ts"],
+      "~config/*": ["src/config/*"],
+      "~common/*": ["src/app/common/*"],
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,

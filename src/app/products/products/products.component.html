@@ -1,0 +1,20 @@
+<section class="Products route">
+  <header>
+    <h2 i18n>Products</h2>
+  </header>
+
+  <div class="diptych" *appLoadingSection="!products?.length">
+    <ul class="section-body">
+      <li *ngFor="let product of products" class="product">
+        <a [routerLink]="['/products', product.id]">
+          <img [src]="product.imageFile" i18n-alt="product name" alt="{{ product.name }}" lazy>
+          <strong i18n="product name">{{ product.name }}</strong>
+        </a>
+        <p i18n="product summary">{{ product.summary }}</p>
+      </li>
+    </ul>
+    <div class="detail">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</section>

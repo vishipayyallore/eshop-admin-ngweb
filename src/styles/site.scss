@@ -1,0 +1,17 @@
+@import '~node_modules/@picocss/pico/scss/pico.classless.scss';
+@import './date-picker.scss';
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+section.route {
+  padding: 1rem
+}
+
+.diptych {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
