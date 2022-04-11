@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { of, shareReplay, tap } from 'rxjs';
+import { shareReplay } from 'rxjs';
 
 import config from '~config'
 import { factoryEndpoint } from './factory-endpoint'
@@ -42,12 +42,12 @@ export class EndpointService {
       const headers = this.endpoints[endpoint].factoryHeaders(additionalHeaders)
       const queryParams = this.endpoints[endpoint]
         .factoryQueryParams(additionalQueryParams)
-      return this.httpClient
+        this.endpoints[endpoint].value = this.httpClient
         .get<T>(url, this.factoryOptions({headers, queryParams}))
-        .pipe(tap(response => this.endpoints[endpoint].value = response), shareReplay(1));
+        .pipe(shareReplay(1))
 
     }
-    return of(this.endpoints[endpoint].value as T)
+    return this.endpoints[endpoint].value
   }
 
   postEndpoint<T>(config:EndpointHTTPArguments = <EndpointHTTPArguments>{}) {
@@ -62,19 +62,79 @@ export class EndpointService {
       throw new Error(`[EndpointService] Endpoint "${endpoint}" not found`)
     }
     if(!this.endpoints[endpoint].value) {
-      const url = this.endpoints[endpoint].url
+      const url = this.factoryUrl(this.endpoints[endpoint].url)
       const headers = this.endpoints[endpoint].factoryHeaders(additionalHeaders)
       const queryParams = this.endpoints[endpoint]
         .factoryQueryParams(additionalQueryParams)
       const body = this.endpoints[endpoint].factoryBody(additionalBody)
-      return this.httpClient
+      this.endpoints[endpoint].value = this.httpClient
         .post<T>(url, body, this.factoryOptions({headers, queryParams}))
-        .pipe(tap(response => this.endpoints[endpoint].value = response), shareReplay(1));
+        .pipe(shareReplay(1))
     }
-    return of(this.endpoints[endpoint].value as T)
+    return this.endpoints[endpoint].value
   }
 
-  private getEndpointArguments({ endpoint, headers, queryParams, body }: EndpointHTTPArguments) {
+  putEndpoint<T>(config:EndpointHTTPArguments = <EndpointHTTPArguments>{}) {
+    const {
+      endpoint, 
+      additionalHeaders, 
+      additionalQueryParams,
+      additionalBody
+    } = this.getEndpointArguments(config)
+
+    if(!this.endpoints[endpoint]) {
+      throw new Error(`[EndpointService] Endpoint "${endpoint}" not found`)
+    }
+    if(!this.endpoints[endpoint].value) {
+      const url = this.factoryUrl(this.endpoints[endpoint].url)
+      const headers = this.endpoints[endpoint].factoryHeaders(additionalHeaders)
+      const queryParams = this.endpoints[endpoint]
+        .factoryQueryParams(additionalQueryParams)
+      const body = this.endpoints[endpoint].factoryBody(additionalBody)
+      this.endpoints[endpoint].value = this.httpClient
+        .put<T>(
+          url, 
+          body, 
+          this.factoryOptions({headers, queryParams, observe: 'response'})
+      )
+        .pipe(shareReplay(1))
+    }
+    return this.endpoints[endpoint].value
+  }
+
+  deleteEndpoint<T>(config:EndpointHTTPArguments = <EndpointHTTPArguments>{}) {
+    const {
+      endpoint, 
+      additionalHeaders, 
+      additionalQueryParams,
+    } = this.getEndpointArguments(config)
+
+    if(!this.endpoints[endpoint]) {
+      throw new Error(`[EndpointService] Endpoint "${endpoint}" not found`)
+    }
+    if(!this.endpoints[endpoint].value) {
+      const url = this.factoryUrl(this.endpoints[endpoint].url)
+      const headers = this.endpoints[endpoint].factoryHeaders(additionalHeaders)
+      const queryParams = this.endpoints[endpoint]
+        .factoryQueryParams(additionalQueryParams)
+      this.endpoints[endpoint].value = this.httpClient
+        .delete<T>(
+          url, 
+          this.factoryOptions({headers, queryParams, observe: 'response'})
+        )
+        .pipe(shareReplay(1))
+    }
+    return this.endpoints[endpoint].value
+  }
+
+  private getEndpointArguments(
+    { 
+      endpoint, 
+      headers, 
+      queryParams, 
+      body 
+    }: EndpointHTTPArguments
+  ) {
     return {
       endpoint,
       additionalHeaders: headers,
@@ -87,16 +147,22 @@ export class EndpointService {
       return config.apiHost + url
   }
 
-  private factoryOptions({ 
+  private factoryOptions(
+    { 
     headers, 
-    queryParams 
-  }: { 
+    queryParams,
+    observe 
+    }: 
+    { 
     headers: { [key: string]: string }, 
-    queryParams: { [key: string]: string } 
-  }) {
+    queryParams: { [key: string]: string }, 
+    observe?: any
+    }
+  ) {
     return {
       headers: {...this.headers, ...headers},
-      params: queryParams
+      params: queryParams,
+      observe
     }
   }
 }

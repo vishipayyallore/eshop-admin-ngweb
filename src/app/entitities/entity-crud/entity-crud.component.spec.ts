@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EntityDeleteComponent } from './entity-delete.component';
+import { EntityCrudComponent } from './entity-crud.component';
 
-describe('EntityDeleteComponent', () => {
-  let component: EntityDeleteComponent;
-  let fixture: ComponentFixture<EntityDeleteComponent>;
+describe('EntityReadComponent', () => {
+  let component: EntityCrudComponent;
+  let fixture: ComponentFixture<EntityCrudComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EntityDeleteComponent ]
+      declarations: [ EntityCrudComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EntityDeleteComponent);
+    fixture = TestBed.createComponent(EntityCrudComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

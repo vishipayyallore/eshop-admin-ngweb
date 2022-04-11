@@ -12,7 +12,7 @@ import { environment } from '~/environments/environment';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
-  products: Array<Product>=[]
+  @ChangeDetecting() products: Array<Product>=[]
   environment = environment;
 
   constructor(
@@ -25,7 +25,6 @@ export class ProductsComponent implements OnInit {
     this.localService.state$.subscribe(this.onProductChange.bind(this))
   }
 
-  @ChangeDetecting()
   private onProductChange(state: ProductsSource) {
     if(state.hasOwnProperty('products')){
       this.products = state.products

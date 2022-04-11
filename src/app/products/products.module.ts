@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { ProductsComponent } from './products/products.component';
 import { ProductComponent } from './product/product.component';
@@ -21,6 +22,7 @@ import { LoadingSectionModule } from '~common/components/loading/loading-section
   providers: [ PrettyPrintPipe, LocalService ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule,
     ProductsRoutingModule,
     ProductServicesModule,

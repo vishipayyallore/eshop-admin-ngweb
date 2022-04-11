@@ -1,3 +1,5 @@
+import { ChangeDetectorRef, Component } from "@angular/core";
+
 /**
  * accessor decorator to conditionally trigger change detection on change (for
  * use with getters that are in the template)
@@ -10,10 +12,30 @@ export function ChangeDetecting({ changeDetectorRefPropertyKey = 'cd' } = {}) {
   return function (
     target: any,
     propertyKey: string,
-    descriptor: PropertyDescriptor
+    descriptor?: PropertyDescriptor
   ): any {
-    const prop = descriptor.hasOwnProperty('get') ? 'get' : 'value';
-    const originalAccessor = descriptor[prop];
+    const prop = descriptor?.hasOwnProperty('get') ? 'get' : 'value';
+
+    if (!descriptor) {
+      let value: any;
+      const getter = function() {
+        return value;
+      };
+      const setter = function(this:any, newVal: string) {
+        value = newVal;
+        const cdR: ChangeDetectorRef = this[changeDetectorRefPropertyKey];
+        if (cdR) {
+          cdR.markForCheck();
+        }
+      }; 
+      Object.defineProperty(target, propertyKey, {
+        get: getter,
+        set: setter
+      }); 
+      return;
+    }
+
+    const originalAccessor = descriptor?.[prop];
 
     descriptor[prop] = function (this: any, ...args: any) {
       if (!this.hasOwnProperty(changeDetectorRefPropertyKey)) {
@@ -28,9 +50,13 @@ export function ChangeDetecting({ changeDetectorRefPropertyKey = 'cd' } = {}) {
       }
 
       const res = originalAccessor.call(this, ...args);
-      if (this[key] !== res && this[changeDetectorRefPropertyKey]) {
+      const cdR: ChangeDetectorRef = this[changeDetectorRefPropertyKey];
+      if (this[key] !== res && cdR) {
+        console.warn('[ChangeDetecting] change detector ref not set (use config object with property \'changeDetectorRefPropertyKey\' to indicate your changeDetectorRef)')
         this[key] = res;
-        this[changeDetectorRefPropertyKey].detectChanges();
+        if (cdR) {
+          cdR.markForCheck();
+        }      
       }
 
       this[key] = res;

@@ -1,0 +1,42 @@
+<section class="EntityRead" *appLoadingSection="!entity">
+  <header>
+    <h3 i18n>Entity <strong>{{ entity.name }}</strong></h3>
+  </header>
+  <ul>
+    <li *ngFor="let row of rows; let i = index; trackBy: index">
+      <label i18n>{{ row.key }}</label>
+      <input *ngIf="['text', 'number'].includes(row.type)" 
+        [name]=row.key 
+        [type]="row.type"
+        [(ngModel)]="row.value"
+        [readonly]="isReadMode || isDeleteMode">
+      <input *ngIf="['date', 'time', 'datetime-local'].includes(row.type)" 
+        [name]=row.key
+        [type]="row.type"
+        [value]="row.value"
+        (change)="onDateChange($event, row)"
+        [readonly]="isReadMode || isDeleteMode">
+      <textarea *ngIf="row.type === 'textarea'" 
+        [name]=row.key 
+        [(ngModel)]="row.value"
+        [readonly]="isReadMode || isDeleteMode">
+      </textarea>
+      <div *ngIf="row.type === 'list'">
+        <input 
+          [name]="row.key" 
+          [(ngModel)]="row.value" 
+          [attr.list]="row.name" [readonly]="isReadMode || isDeleteMode">
+        <datalist [id]="row.name">
+          <option *ngFor="let option of row.datalist" [value]="option">
+        </datalist>
+      </div>
+    </li>
+  </ul>
+  <footer *ngIf="!isReadMode">
+    <button class=cta (click)="onCTA()">
+      <span *ngIf="isCreateMode" class="cta-text" i18n>Create</span>
+      <span *ngIf="isUpdateMode" class="cta-text" i18n>Update</span>
+      <span *ngIf="isDeleteMode" class="cta-text" i18n>Delete</span>
+    </button>
+  </footer>
+</section>

@@ -23,6 +23,7 @@
     "@angular/router": "~13.2.0",
     "@picocss/pico": "^1.5.0",
     "datalist-polyfill": "^1.24.4",
+    "date-fns": "^2.28.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

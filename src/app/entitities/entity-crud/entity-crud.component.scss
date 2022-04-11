@@ -1,0 +1,11 @@
+.EntityRead {
+  textarea {
+    pointer-events: auto;
+  }
+
+  footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+}

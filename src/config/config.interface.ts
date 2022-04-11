@@ -1,6 +1,6 @@
 import type { Environments } from "./environments.enum";
 import type { JSONValue } from "~common/json";
-import type { Endpoint } from "~/app/common/services/endpoint/endpoint.interface";
+import type { Endpoint } from "~common/services/endpoint/endpoint.interface";
 
 
 

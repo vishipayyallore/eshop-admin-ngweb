@@ -1,4 +1,4 @@
-export enum ProductModes {
+export enum CrudModes {
   unknown,
   Create = 'create',
   Read = 'read',
