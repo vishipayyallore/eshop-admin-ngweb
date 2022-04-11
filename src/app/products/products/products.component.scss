@@ -1,0 +1,24 @@
+.Products {
+  .diptych {
+    grid-template-rows: max(8em, calc(100vh - 352pt));
+    width: 100%;
+    height: 100%;    max-width: calc(100vw - 2rem);
+    padding: 1rem;
+    overflow-y: hidden;
+    border-top: solid 2pt var(--color);
+    border-bottom: solid 2pt var(--color);
+
+    > :first-child, > :last-child {
+      overflow-y: auto;
+      height: 100%;
+    }
+
+    > :first-child {
+      border-right: solid 2pt var(--color);
+    }
+  }
+
+  .detail {
+    padding: 1rem;
+  }
+}

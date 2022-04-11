@@ -1,0 +1,50 @@
+{
+  "name": "eshop-admin-ngweb",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "start:local-dev": "ng serve --configuration=local-dev",
+    "build": "ng build",
+    "watch": "ng test --watch",
+    "test": "ng test",
+    "lint": "ng lint",
+    "i18n:extract": "ng extract-i18n"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~13.2.0",
+    "@angular/common": "~13.2.0",
+    "@angular/compiler": "~13.2.0",
+    "@angular/core": "~13.2.0",
+    "@angular/forms": "~13.2.0",
+    "@angular/platform-browser": "~13.2.0",
+    "@angular/platform-browser-dynamic": "~13.2.0",
+    "@angular/router": "~13.2.0",
+    "@picocss/pico": "^1.5.0",
+    "datalist-polyfill": "^1.24.4",
+    "rxjs": "~7.5.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.11.4"
+  },
+  "devDependencies": {
+    "@angular-builders/jest": "^13.0.3",
+    "@angular-devkit/build-angular": "~13.2.1",
+    "@angular-eslint/builder": "13.2.0",
+    "@angular-eslint/eslint-plugin": "13.2.0",
+    "@angular-eslint/eslint-plugin-template": "13.2.0",
+    "@angular-eslint/schematics": "13.2.0",
+    "@angular-eslint/template-parser": "13.2.0",
+    "@angular/cli": "~13.2.1",
+    "@angular/compiler-cli": "~13.2.0",
+    "@angular/localize": "^13.2.7",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^12.11.1",
+    "@typescript-eslint/eslint-plugin": "5.17.0",
+    "@typescript-eslint/parser": "5.17.0",
+    "eslint": "^8.12.0",
+    "jest": "^27.5.1",
+    "jest-preset-angular": "^11.1.1",
+    "typescript": "~4.5.2"
+  }
+}
