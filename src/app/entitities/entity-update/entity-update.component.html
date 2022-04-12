@@ -1,0 +1,29 @@
+<section class="EntityRead" *appLoadingSection="!entity">
+  <header>
+    <h3 i18n>Entity <strong>{{ entity.name }}</strong></h3>
+  </header>
+  <ul>
+    <li *ngFor="let row of rows; let i = index">
+      <label i18n>{{ row.key }}</label>
+      <input [name]=row.key *ngIf="['text', 'number'].includes(row.type)" 
+        [type]="row.type"
+        [value]="row.value">
+      <input [name]=row.key *ngIf="row.type === 'date'" 
+        [type]="row.type"
+        [value]="row.value">
+      <textarea *ngIf="row.type === 'textarea'" 
+        [name]=row.key 
+        [value]="row.value">
+      </textarea>
+      <div *ngIf="row.type === 'list'">
+        <input 
+          [name]="row.key" 
+          [value]="row.value" 
+          [attr.list]="row.name">
+        <datalist [id]="row.name">
+          <option *ngFor="let option of row.datalist" [value]="option">
+        </datalist>
+      </div>
+    </li>
+  </ul>
+</section>

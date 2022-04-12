@@ -12,7 +12,7 @@ import { CrudModes } from '~/app/entitities/entity-crud/crud-modes';
 import { ProductsSource } from '../products-source.interface';
 import { productSchema } from './product-schema';
 
-declare const structuredClone: Function; 
+declare const structuredClone: Function;
 
 @Component({
   selector: 'app-product',
@@ -24,18 +24,18 @@ export class ProductComponent implements OnInit {
   @ChangeDetecting() product?: Product
   productId: string | null = null
   productSchema = structuredClone(productSchema)
-  
+
   isLoading = true
   isCreateMode = false
   isReadMode = true
   isUpdateMode = false
   isDeleteMode = false
-  
+
   private _mode: CrudModes = CrudModes.Read
   get mode(): CrudModes {
     return this._mode
   }
-  set mode(value: CrudModes){
+  set mode(value: CrudModes) {
     this._mode = value
     this.isCreateMode = value === CrudModes.Create
     this.isReadMode = value === CrudModes.Read
@@ -54,25 +54,27 @@ export class ProductComponent implements OnInit {
     this.localService.state$.subscribe(this.onStateChange.bind(this))
   }
 
-  private onStateChange(state: any){
-    if(state.hasOwnProperty(Endpoints.Products)){
+  private onStateChange(state: any) {
+    if (state.hasOwnProperty(Endpoints.Products)) {
       this.onProductsChange(state);
     }
-    if(state.hasOwnProperty(Endpoints.ProductsPut)){
+    if (state.hasOwnProperty(Endpoints.ProductsPut)) {
       this.onProductsUpdateComplete(state);
     }
-    if(state.hasOwnProperty(Endpoints.ProductsPost)){
+    if (state.hasOwnProperty(Endpoints.ProductsPost)) {
       this.onProductsCreateComplete(state);
     }
-    if(state.hasOwnProperty('deleteProductComplete')){
+    if (state.hasOwnProperty('deleteProductComplete')) {
       this.onProductsDeleteComplete(state);
-    }  
+    }
   }
 
   private onProductsChange(state: ProductsSource) {
-    this.product = {...this.localService.products
-      ?.find(factoryHasValue('id', is(this.productId)))!}
-    this.productSchema.category.datalist = 
+    this.product = {
+      ...this.localService.products
+        ?.find(factoryHasValue('id', is(this.productId)))!
+    }
+    this.productSchema.category.datalist =
       Array.from(new Set(this.localService.products?.map(x => x.category)))
     this.isLoading = false
     return state.products
@@ -81,12 +83,12 @@ export class ProductComponent implements OnInit {
   private onProductsUpdateComplete(state: ProductsSource) {
     const productIndex = this.localService.products
       ?.findIndex(factoryHasValue('id', is(this.product?.id)))!
-    if((state[Endpoints.ProductsPut]?.status ?? 500) < 300) {
-      if(productIndex > -1 && this.product && this.localService.products){
+    if ((state[Endpoints.ProductsPut]?.status ?? 500) < 300) {
+      if (productIndex > -1 && this.product && this.localService.products) {
         this.localService.products[productIndex] = this.product
         this.mode = CrudModes.Read
       }
-    } else if(productIndex > -1 && this.localService.products) {
+    } else if (productIndex > -1 && this.localService.products) {
       this.product = this.localService.products[productIndex]
       // TODO: toast 
     }
@@ -111,17 +113,17 @@ export class ProductComponent implements OnInit {
     this.product = product
   }
 
-  onCreate(){
+  onCreate() {
     this.localService.createProduct(this.product)
   }
 
-  onUpdate(){
+  onUpdate() {
     this.isLoading = true
     this.localService.updateProduct(this.product)
   }
 
-  onDelete(){
-    if(this.product?.id){
+  onDelete() {
+    if (this.product?.id) {
       this.localService.deleteProduct(this.product.id)
     }
   }
