@@ -3,31 +3,22 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { EntitiesComponent } from './entities.component';
-import { EntityCreateComponent } from './entity-create/entity-create.component';
-import { EntityReadComponent } from './entity-read/entity-read.component';
-import { EntityUpdateComponent } from './entity-update/entity-update.component';
-import { EntityDeleteComponent } from './entity-delete/entity-delete.component';
+import { EntityCrudComponent } from './entity-crud/entity-crud.component';
 import { LoadingSectionModule } from '~common/components/loading/loading-section.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     EntitiesComponent,
-    EntityCreateComponent,
-    EntityReadComponent,
-    EntityUpdateComponent,
-    EntityDeleteComponent
+    EntityCrudComponent,
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule,
     LoadingSectionModule
   ],
-  exports: [
-    EntityCreateComponent,
-    EntityReadComponent,
-    EntityUpdateComponent,
-    EntityDeleteComponent
-  ]
+  exports: [ EntityCrudComponent  ]
 })
 export class EntitiesModule { }

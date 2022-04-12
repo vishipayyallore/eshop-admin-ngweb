@@ -1,4 +1,4 @@
-import type { JSONValue } from "~/app/common/json";
+import type { JSONValue } from "~common/json";
 import type { Environments } from "./environments.enum";
 
 

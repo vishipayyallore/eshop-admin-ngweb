@@ -1,5 +1,4 @@
 @import '~node_modules/@picocss/pico/scss/pico.classless.scss';
-@import './date-picker.scss';
 
 ul {
   padding: 0;
@@ -14,4 +13,10 @@ section.route {
 .diptych {
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+
+button.cta {
+  width: fit-content;
+  padding-left: 2em;
+  padding-right: 2em;
 }

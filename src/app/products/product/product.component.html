@@ -1,21 +1,20 @@
-<section class="Product" *appLoadingSection="!product">
-  <app-entity-create *ngIf="isCreateMode"
-    [(entity)]=product 
-    [schema]=productSchema 
-    (create)="onCreate()">
-  </app-entity-create>
-  <app-entity-read *ngIf="isReadMode" 
-    [schema]=productSchema 
-    [entity]=product>
-  </app-entity-read>
-  <app-entity-update *ngIf="isUpdateMode"
-    [(entity)]=product
-    [schema]=productSchema
-    (update)="onUpdate()">
-  </app-entity-update>
-  <app-entity-delete *ngIf="isDeleteMode"
-    [entity]=product 
-    [schema]=productSchema 
-    (delete)="onDelete()">
-  </app-entity-delete>
+<section class=Product *appLoadingSection="isLoading">
+  <ul class=crud-controls>
+    <li class=read>
+      <input type="radio" name=read value="read" [(ngModel)]="mode">
+      <label for=read i18n>Read</label>
+    </li>
+    <li class=update>
+      <input type="radio" name=udpate value="update" [(ngModel)]="mode">
+      <label for=update i18n>Update</label>
+    </li>
+    <li class=delete>
+      <input type="radio" name=delete value="delete" [(ngModel)]="mode">
+      <label for=delete i18n>Delete</label>
+    </li>
+  </ul>
+
+  <app-entity-crud [mode]="mode" [schema]=productSchema [entity]=product (changeEntity)="onChange($event)"
+    (create)="onCreate()" (update)="onUpdate()" (delete)="onDelete()">
+  </app-entity-crud>
 </section>

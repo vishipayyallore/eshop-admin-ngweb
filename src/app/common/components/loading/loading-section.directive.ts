@@ -3,7 +3,7 @@ import {
   SimpleChanges, TemplateRef, ViewContainerRef 
 } from '@angular/core';
 
-import { LoadingSectionComponent } from '~/app/common/components/loading/loading-section.component';
+import { LoadingSectionComponent } from '~common/components/loading/loading-section.component';
 
 
 @Directive({

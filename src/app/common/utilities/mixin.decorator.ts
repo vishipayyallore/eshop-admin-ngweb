@@ -41,10 +41,13 @@ export function Mixin(...classes: Function[]): ClassDecorator {
 
     // copy prototype so intanceof operator still works
     f.prototype = original.prototype
+    Object.getOwnPropertyNames(original).forEach((key) => {
+      Object.defineProperty(f, key, { value: original[key] })
+    })
 
     classes.forEach(constructor => {
       if (Object.getOwnPropertyNames(constructor).includes('postConstructor')) {
-        postConstructors.push(constructor['postConstructor'])
+        postConstructors.push((constructor as any)['postConstructor'] as Function)
       }
       Object.getOwnPropertyNames(constructor.prototype)
         .filter(x => !['constructor'].includes(x))
@@ -52,7 +55,7 @@ export function Mixin(...classes: Function[]): ClassDecorator {
           Object.defineProperty(
             f.prototype,
             name,
-            Object.getOwnPropertyDescriptor(constructor.prototype, name),
+            Object.getOwnPropertyDescriptor(constructor.prototype, name)!,
           )
         })
     })

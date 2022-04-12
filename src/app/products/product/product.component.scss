@@ -1,0 +1,15 @@
+.Product {
+  position: relative;
+  padding-top: 3em;
+
+  .crud-controls {
+    display: inline-flex;
+    flex-direction: row;
+    position: absolute;
+    top:0;
+
+    li {
+      list-style: none;
+    }
+  }
+}

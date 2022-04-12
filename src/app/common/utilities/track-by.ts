@@ -17,7 +17,7 @@
 
 export class TrackBy<T> {
   static readonly protectedProperties = ['key', 'id', 'index', 'customProperty'];
-  [key: string]: Function | string;
+  [key: string]: Function | any;
 
   private key: string;
   constructor(key = 'id') {
