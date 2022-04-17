@@ -5,6 +5,7 @@ import { LocalService } from '~/app/products/services/local.service';
 import { Product } from '~/app/products/product.interface';
 import { ProductsSource } from '~/app/products/products-source.interface';
 import { environment } from '~/environments/environment';
+import config from '~/config';
 
 @Component({
   selector: 'app-products',
@@ -14,6 +15,7 @@ import { environment } from '~/environments/environment';
 export class ProductsComponent implements OnInit {
   @ChangeDetecting() products: Array<Product>=[]
   environment = environment;
+  cdnHost = config['cdnHost'];
 
   constructor(
     private cd: ChangeDetectorRef,
