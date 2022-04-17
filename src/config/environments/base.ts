@@ -5,7 +5,7 @@ import { Endpoints } from "./endpoints";
 export const base = {
   appName: 'eshop-admin-ngweb',
   apiHost: 'http://productsapiv1.eastus.azurecontainer.io',
-  cdnHost: 'http://eshopcdn.eastus.azurecontainer.io',
+  cdnHost: 'https://stforeshop.blob.core.windows.net/productsimages/',
   endpoints: [
     {
       name: Endpoints.Products,
