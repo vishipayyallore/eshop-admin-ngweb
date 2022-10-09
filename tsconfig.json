@@ -4,13 +4,23 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "~/*": ["src/*"],
-      "~assets/*": ["src/assets/*"],
-      "~config": ["src/config/index.ts"],
-      "~config/*": ["src/config/*"],
-      "~common/*": ["src/app/common/*"],
+      "~/*": [
+        "src/*"
+      ],
+      "~assets/*": [
+        "src/assets/*"
+      ],
+      "~config": [
+        "src/config/index.ts"
+      ],
+      "~config/*": [
+        "src/config/*"
+      ],
+      "~common/*": [
+        "src/app/common/*"
+      ],
     },
-    "outDir": "./dist/out-tsc",
+    "outDir": "./dist/eshop-admin-app",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
