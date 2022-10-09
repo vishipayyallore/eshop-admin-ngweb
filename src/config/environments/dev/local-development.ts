@@ -1,3 +1,4 @@
 export const localDevelopment = {
-  apiHost: 'https://localhost:7265',
+  apiHost: undefined as any
+//  apiHost: 'https://localhost:7265',
 }

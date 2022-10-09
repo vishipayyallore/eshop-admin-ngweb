@@ -1,7 +1,5 @@
 import { Observable, ReplaySubject } from 'rxjs'
-
 import type { StrictConstructor } from './constructor'
-
 
 /**
  * @decorator Stateful
@@ -29,23 +27,28 @@ export interface Stateful<T> {
 export function Stateful<T>(): ClassDecorator {
   // because of the generic, we must use the parameterized form of the decorator
   return function <TFunction extends StrictConstructor>(target: TFunction) {
-    const k = class extends target implements StatefulObservable {
-      private state: ReplaySubject<T>
-      public state$: Observable<T>
-
-      constructor(...args: any[]) {
-        super(...args)
-        this.state = new ReplaySubject<T>()
-        this.state$ = this.state.asObservable()
-      }
-    }
-    Object.defineProperty(k, 'name', {value: target.name})
-    return k
+    const state = {value: new ReplaySubject<T>()}
+    Object.defineProperties(target.prototype, {
+      state,
+      state$: {value: state.value.asObservable()}
+    })
+    return target
   } as ClassDecorator
 }
 
 export function emitPropertyChange(property: string) {
   return function (this: StatefulSubject): void {
     this.state.next({ [property]: (this as any)[property] })
+  }
+}
+
+export function emitPropertyChanges(...properties: Array<string>) {
+  return function (this: StatefulSubject): void {
+    const state = properties.reduce((dict, property) => {
+      dict[property] = (this as any)[property]
+      return dict
+    }, {} as {[state: string]: unknown})
+
+    this.state.next(state)
   }
 }

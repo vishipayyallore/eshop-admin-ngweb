@@ -11,7 +11,7 @@ describe('BeforeDecorator', () => {
   it('should modify a method to execute a function before the method', () => {
     jest.spyOn(watcher, 'observe')
 
-    let sentinel: boolean
+    let sentinel: boolean | null = null;
 
     function testFunction() {
       watcher.observe(true)
@@ -32,8 +32,8 @@ describe('BeforeDecorator', () => {
   })
 
   it('should have access to the parameters', () => {
-    let returnValue: boolean
-    let originalMethodValue: boolean
+    let returnValue: boolean | null = null
+    let originalMethodValue: boolean | null = null
 
     class AccessParameters {
       @Before((value: boolean) => (returnValue = value))

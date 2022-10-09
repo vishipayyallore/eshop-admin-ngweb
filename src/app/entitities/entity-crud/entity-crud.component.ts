@@ -86,6 +86,16 @@ export class EntityCrudComponent extends TrackBy<number> implements OnChanges {
         outputValue: value 
       }
     }
+    if(this.schema.hasOwnProperty(key) 
+      && ['list'].includes(this.schema[key].type)){
+      return { 
+        ...this.schema[key],
+        key, 
+        name: key.replace(/[\w\d\_]/g, '_'),
+        outputValue: value,
+      }
+
+    }
     return { ...this.schema[key], key, value }
   }
 
@@ -93,6 +103,11 @@ export class EntityCrudComponent extends TrackBy<number> implements OnChanges {
     const e = event as TargetEvent<string>;
     row.value = e.target.value
     row.outputValue = format(new Date(e.target.value!), row.format)
+  }
+
+  onListChange(event: Event, row: any) {
+    const e = event as TargetEvent<string>;
+    row.outputValue = e.target.value
   }
 
   onCTA() {

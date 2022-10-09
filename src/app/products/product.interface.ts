@@ -12,3 +12,14 @@ export interface Product {
   modifiedBy: string
   modifiedDateTime: string | Date
 }
+
+export function factoryProduct() {
+  return {
+    name: null,
+    category: null,
+    summary: null,
+    description: null,
+    imageFile: null,
+    price: null
+  } as any as Product
+}
