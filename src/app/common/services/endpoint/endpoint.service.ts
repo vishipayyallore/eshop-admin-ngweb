@@ -5,6 +5,7 @@ import { shareReplay } from 'rxjs';
 import config from '~config'
 import { factoryEndpoint } from './factory-endpoint'
 import { EndpointHTTPArguments } from './endpoint-http-arguments.interface';
+import { AppConfigurationService } from '../configuration/app-configuration.service';
 //import { LogMethods } from '~common/utilities/log-methods.decorator';
 
 
@@ -16,7 +17,10 @@ export class EndpointService {
   headers = {}
   endpoints = Object.fromEntries(config.endpoints.map(factoryEndpoint))
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private appConfig: AppConfigurationService
+  ) { }
 
   clearEndpointValue(endpoint: string) {
     console.warn(`[EndpointService] clearing endpoint value for endpoint "${
@@ -144,19 +148,20 @@ export class EndpointService {
   }
 
   private factoryUrl(url: string) {
-      return config.apiHost + url
+    const rootUrl = config.apiHost 
+      ?? this.appConfig.configuration?.apiHost
+  console.log(this.appConfig)
+    return rootUrl + url
   }
 
   private factoryOptions(
     { 
-    headers, 
-    queryParams,
-    observe 
+      headers, queryParams, observe 
     }: 
     { 
-    headers: { [key: string]: string }, 
-    queryParams: { [key: string]: string }, 
-    observe?: any
+      headers: { [key: string]: string }, 
+      queryParams: { [key: string]: string }, 
+      observe?: any
     }
   ) {
     return {

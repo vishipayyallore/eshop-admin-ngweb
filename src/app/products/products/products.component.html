@@ -3,9 +3,26 @@
     <h2 i18n>Products</h2>
   </header>
 
+  <div class="list-controls" *ngIf="!isProductFocused">
+    <div class="categories--control">
+      <input list="categories" [value]="category ?? ''"
+        (change)="onChangeCategories($event)" placeholder="select a category">
+      <datalist id="categories">
+        <option #category *ngFor="let category of categories" 
+          [value]="category">
+        </option>
+      </datalist>
+      <button>update category</button>
+    </div>
+    <button (click)="onNewProduct()">New Product</button>  
+  </div>
+  <div class="categories--control" *ngIf="isProductFocused">
+    <button (click)="onBack()">back</button>
+  </div>
+
   <div class="diptych" *appLoadingSection="!products?.length">
     <ul class="section-body">
-      <li *ngFor="let product of products" class="product">
+      <li *ngFor="let product of filteredProducts" class="product">
         <a [routerLink]="['/products', product.id]">
           <img [src]="cdnHost + product.imageFile" i18n-alt="product name" alt="{{ product.name }}" lazy>
           <strong i18n="product name">{{ product.name }}</strong>

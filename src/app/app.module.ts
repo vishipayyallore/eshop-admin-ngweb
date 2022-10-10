@@ -8,6 +8,8 @@ import { ProductsModule } from './products/products.module';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { EntitiesModule } from './entitities/entities.module';
+import { AppConfigurationService } from './common/services/configuration/app-configuration.service';
+import config from '~config';
 
 
 @NgModule({
@@ -22,6 +24,9 @@ import { EntitiesModule } from './entitities/entities.module';
     HttpClientModule,
     EntitiesModule,
     ProductsModule,
+  ],
+  providers: [
+    AppConfigurationService.forRoot(),
   ],
   bootstrap: [AppComponent]
 })

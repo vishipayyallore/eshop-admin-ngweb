@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { environment } from '~/environments/environment';
 import { EntitiesComponent } from './entitities/entities.component';
-import { ProductsComponent } from './products/products/products.component';
 
 
 const routes: Routes = [
@@ -16,7 +15,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes /*, { enableTracing: !environment.production } */)],
+imports: [RouterModule.forRoot(routes /* , { enableTracing: !environment.production } */)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

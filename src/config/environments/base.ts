@@ -8,6 +8,22 @@ export const base = {
   cdnHost: 'https://stforeshop.blob.core.windows.net/productsimages/',
   endpoints: [
     {
+      name: Endpoints.Configuration,
+      type: HTTPRequestType.GET,
+      url: 'https://func-configuration.azurewebsites.net/api/get-configuration',
+      description: 'Get the global app configuration',
+      factroyQueryParams: _partial => ({ appSettings: 'true' })
+
+    },
+    {
+      name: Endpoints.ProductsConfiguration,
+      type: HTTPRequestType.GET,
+      url: 'https://func-configuration.azurewebsites.net/api/get-configuration',
+      description: 'Get the global app configuration',
+      meta: { configuration: { serviceName: 'products' }},
+      factroyQueryParams: _partial => ({ products: 'true' })
+    },
+    {
       name: Endpoints.Products,
       type: HTTPRequestType.GET,
       url: '/api/v1/products',

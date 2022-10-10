@@ -11,6 +11,8 @@ import { ProductServicesModule } from './services/product-services.module';
 import { LocalService } from './services/local.service';
 import { EntitiesModule } from '~/app/entitities/entities.module';
 import { LoadingSectionModule } from '~common/components/loading/loading-section.module';
+import { AppConfigurationService } from '../common/services/configuration/app-configuration.service';
+import { Endpoints } from '~/config/environments/endpoints';
 
 
 @NgModule({
@@ -34,4 +36,8 @@ import { LoadingSectionModule } from '~common/components/loading/loading-section
     ProductComponent
   ]
 })
-export class ProductsModule { }
+export class ProductsModule {
+  constructor(private appConfig: AppConfigurationService) {
+    this.appConfig.getConfiguration(Endpoints.ProductsConfiguration)
+  }
+}

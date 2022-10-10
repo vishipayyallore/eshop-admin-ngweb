@@ -6,26 +6,28 @@
     <li *ngFor="let row of rows; let i = index; trackBy: index">
       <label i18n>{{ row.key }}</label>
       <input *ngIf="['text', 'number'].includes(row.type)" 
-        [name]=row.key 
+        [attr.name]=row.key 
         [type]="row.type"
         [(ngModel)]="row.value"
         [readonly]="isReadMode || isDeleteMode">
       <input *ngIf="['date', 'time', 'datetime-local'].includes(row.type)" 
-        [name]=row.key
+        [attr.name]=row.key
         [type]="row.type"
         [value]="row.value"
         (change)="onDateChange($event, row)"
         [readonly]="isReadMode || isDeleteMode">
       <textarea *ngIf="row.type === 'textarea'" 
-        [name]=row.key 
+        [attr.name]=row.key 
         [(ngModel)]="row.value"
         [readonly]="isReadMode || isDeleteMode">
       </textarea>
       <div *ngIf="row.type === 'list'">
         <input 
-          [name]="row.key" 
-          [(ngModel)]="row.value" 
-          [attr.list]="row.name" [readonly]="isReadMode || isDeleteMode">
+          [attr.name]="row.key" 
+          (change)="onListChange($event, row)" 
+          [attr.list]="row.name" 
+          [value]="row.outputValue"
+          [readonly]="isReadMode || isDeleteMode">
         <datalist [id]="row.name">
           <option *ngFor="let option of row.datalist" [value]="option">
         </datalist>
